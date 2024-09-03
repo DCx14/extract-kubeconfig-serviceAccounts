@@ -1,39 +1,44 @@
-# Générateur de Kubeconfig pour ServiceAccounts
+# 🛠 Générateur de Kubeconfig pour ServiceAccounts
 
-Ce script Bash génère des fichiers `kubeconfig` pour les `ServiceAccounts` présents dans les namespaces Kubernetes spécifiés. Il est conçu pour faciliter la configuration des clients Kubernetes avec les informations nécessaires à partir des `ServiceAccounts` et de leurs secrets associés.
+Bienvenue ! Ce script Bash génère des fichiers `kubeconfig` pour les `ServiceAccounts` dans un cluster Kubernetes. Il simplifie la configuration des clients Kubernetes en utilisant les secrets associés à chaque `ServiceAccount`.
 
-## Description
+## 📋 Fonctionnalités
 
-Le script exécute les étapes suivantes :
+- **Création Automatique** : Crée un répertoire de sortie si nécessaire.
+- **Recherche Flexible** : Sélectionnez la recherche dans tous les namespaces ou ceux avec un préfixe spécifique.
+- **Extraction des Secrets** : Récupère les secrets associés, incluant les données `ca.crt` et `token`.
+- **Génération de Kubeconfig** : Crée des fichiers `kubeconfig` configurés pour chaque `ServiceAccount`.
+- **Sauvegarde Organisée** : Enregistre les fichiers `kubeconfig` dans un répertoire désigné.
 
-1. **Création du Répertoire de Sortie :** Crée un répertoire pour stocker les fichiers `kubeconfig` si ce répertoire n'existe pas encore.
-2. **Récupération des Namespaces :** Selon la configuration, il récupère tous les namespaces ou ceux qui correspondent à un préfixe spécifié.
-3. **Traitement des ServiceAccounts :** Recherche les `ServiceAccounts` dans chaque namespace avec un préfixe défini et traite chacun d'eux.
-4. **Récupération des Secrets :** Identifie les secrets associés aux `ServiceAccounts`, extrait les données nécessaires (`ca.crt` et `token`).
-5. **Génération des Fichiers Kubeconfig :** Crée un fichier `kubeconfig` pour chaque `ServiceAccount` avec les données extraites.
-6. **Sauvegarde des Kubeconfigs :** Stocke chaque fichier `kubeconfig` dans le répertoire de sortie.
+## ⚙️ Configuration
 
-## Variables
+Adaptez les variables suivantes dans le script pour personnaliser son fonctionnement :
 
-- **SEARCH_ALL_NAMESPACES** : (booléen) Détermine si tous les namespaces doivent être recherchés (`true`) ou seulement ceux avec le préfixe spécifié (`false`).
-- **PREFIX_NAMESPACE** : (chaîne) Préfixe des namespaces à traiter si `SEARCH_ALL_NAMESPACES` est `false`.
-- **PREFIX_SA** : (chaîne) Préfixe des `ServiceAccounts` à rechercher.
-- **OUTPUT_DIR** : (chaîne) Répertoire où les fichiers `kubeconfig` seront sauvegardés.
-- **FORCESERVEUR** : (booléen) Indique si un serveur spécifique doit être utilisé (`true`) ou si l'URL du serveur doit être extraite de la configuration actuelle (`false`).
-- **SERVEURNAME** : (chaîne) URL du serveur Kubernetes à utiliser si `FORCESERVEUR` est `true`.
+- **`SEARCH_ALL_NAMESPACES`** : 
+  - `true` : Rechercher dans tous les namespaces.
+  - `false` : Rechercher dans les namespaces correspondant au préfixe spécifié.
 
-## Utilisation
+- **`PREFIX_NAMESPACE`** : Préfixe des namespaces à filtrer si `SEARCH_ALL_NAMESPACES` est `false`.
 
-1. **Configurer les Variables :** Modifiez les variables en haut du script pour répondre à vos besoins spécifiques.
-2. **Exécuter le Script :** Lancez le script depuis votre terminal avec la commande suivante :
+- **`PREFIX_SA`** : Préfixe des `ServiceAccounts` à rechercher.
 
-   `bash votre_script.sh`
+- **`OUTPUT_DIR`** : Répertoire de sortie pour les fichiers `kubeconfig`.
 
-3. **Vérifier les Résultats :** Les fichiers `kubeconfig` générés seront enregistrés dans le répertoire spécifié par la variable `OUTPUT_DIR`.
+- **`FORCESERVEUR`** : 
+  - `true` : Utiliser un serveur spécifique.
+  - `false` : Extraire l'URL du serveur de la configuration actuelle.
 
-## Exemple de Configuration
+- **`SERVEURNAME`** : URL du serveur Kubernetes à utiliser si `FORCESERVEUR` est `true`.
 
-Pour générer des fichiers `kubeconfig` pour tous les `ServiceAccounts` dont le nom commence par `admin-` dans tous les namespaces et sauvegarder les résultats dans le répertoire `kubeconfig-all`, configurez les variables comme suit :
+## 🚀 Utilisation
+
+1. **Configurer les Variables** : Modifiez les variables dans le script pour correspondre à vos besoins.
+2. **Exécuter le Script** : Lancez le script depuis votre terminal.
+3. **Vérifier les Résultats** : Les fichiers `kubeconfig` seront sauvegardés dans le répertoire défini par `OUTPUT_DIR`.
+
+## 🔍 Exemple de Configuration
+
+Pour générer des fichiers `kubeconfig` pour les `ServiceAccounts` dont le nom commence par `admin-` dans tous les namespaces et sauvegarder les résultats dans `kubeconfig-all`, configurez les variables comme suit :
 
 - `SEARCH_ALL_NAMESPACES=true`
 - `PREFIX_NAMESPACE="monapp-"`
@@ -42,17 +47,15 @@ Pour générer des fichiers `kubeconfig` pour tous les `ServiceAccounts` dont le
 - `FORCESERVEUR=false`
 - `SERVEURNAME="https://MONFQDNAPIKUBE.com"`
 
-Ensuite, exécutez le script pour générer les fichiers `kubeconfig`.
+## 📝 Remarques
 
-## Remarques
+- Assurez-vous d'avoir les permissions nécessaires pour accéder aux namespaces, `ServiceAccounts`, et secrets dans votre cluster Kubernetes.
+- Le script suppose que les secrets contiennent les clés `ca.crt` et `token`. Vérifiez que vos secrets respectent cette structure.
 
-- Assurez-vous que vous disposez des permissions nécessaires pour accéder aux namespaces, `ServiceAccounts`, et secrets dans votre cluster Kubernetes.
-- Le script suppose que les secrets associés aux `ServiceAccounts` contiennent les clés `ca.crt` et `token`. Veillez à ce que vos secrets respectent cette structure.
+## 🗂 Licence
 
-## Auteurs
+Ce projet est sous la licence [Nom de la Licence] - consultez le fichier [LICENSE](LICENSE) pour plus de détails.
 
-- [Votre Nom]
+---
 
-## Licence
-
-Ce projet est sous la licence [Nom de la Licence] - voir le fichier [LICENSE](LICENSE) pour les détails.
+*Pour toute question ou contribution, n'hésitez pas à ouvrir une issue ou à envoyer une pull request !* 😊
